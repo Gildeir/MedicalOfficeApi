@@ -31,6 +31,8 @@
 *.opencover
 *.testsettings
 *.runsettings
+*.csproj
+*.http
 
 # Temporary files
 *.tmp
