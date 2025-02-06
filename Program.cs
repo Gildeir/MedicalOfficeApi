@@ -1,5 +1,8 @@
 
 using MedicalOfficeApi.Context;
+using MedicalOfficeApi.Controllers;
+using MedicalOfficeApi.Repository;
+using MedicalOfficeApi.Repository.Interfaces;
 using MedicalOfficeApi.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +21,9 @@ namespace MedicalOfficeApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IEmailService, EmailService>();
+
+            builder.Services.AddScoped<IBaseRepository, BaseRepository>();
+            builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 
             builder.Services.AddDbContext<MediaOfficeContext>(options =>
             {
