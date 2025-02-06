@@ -1,5 +1,7 @@
 
+using MedicalOfficeApi.Context;
 using MedicalOfficeApi.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedicalOfficeApi
 {
@@ -17,8 +19,23 @@ namespace MedicalOfficeApi
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IEmailService, EmailService>();
 
-            
-            
+            builder.Services.AddDbContext<MediaOfficeContext>(options =>
+            {
+                // 1. Get the connection string from configuration
+                string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+                // 2. Use the correct UseSqlServer overload
+                options.UseSqlServer(connectionString);
+
+                // Important: Handle any potential exceptions during connection string retrieval.
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    throw new InvalidOperationException("The 'DefaultConnection' connection string is not configured.");
+                }
+            });
+
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
